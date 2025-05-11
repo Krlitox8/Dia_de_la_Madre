@@ -37,16 +37,27 @@
     .opcion:hover {
       background-color: #e15c69;
     }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 <body>
   <h1>🌷 Un Día Especial para Mamá 🌷</h1>
+  <img id="imagen" src="inicio.jpg" alt="Escena" />
   <div id="historia">Toca una opción para comenzar tu historia.</div>
   <div id="opciones"></div>
 
   <script>
     const historia = document.getElementById("historia");
     const opciones = document.getElementById("opciones");
+    const imagen = document.getElementById("imagen");
 
     const escenas = {
       inicio: {
@@ -57,21 +68,22 @@
         ]
       },
       celular: {
-        texto: "Miras tu celular, pero no hay mensajes nuevos. Decides escribirle a tu hijo mayor: “Hola mi amor, ¿cómo estás?”",
+        texto: "Miras tu celular, pero no hay mensajes nuevos. Decides escribirle a tu hijo Carlitos: “Hola mijo. Dios lo bendiga ¿cómo estás?”",
+        imagen: "saludoHijo.jpeg",
         opciones: [
           { texto: "Esperar en la cama", destino: "esperar" },
           { texto: "Levantarte ahora", destino: "levantarse" }
         ]
       },
       levantarse: {
-        texto: "Te levantas con calma, pero tu hijo menor corre a ti. '¡Mami, espera! ¡No vayas a la cocina todavía!'",
+        texto: "Te levantas con calma, pero tu hijo Juanfer corre a ti. '¡Mami, espera! ¡No vayas a la cocina todavía!'",
         opciones: [
           { texto: "Obedecer y quedarte esperando", destino: "esperar" },
           { texto: "Insistir y mirar qué pasa", destino: "sorprendida" }
         ]
       },
       esperar: {
-        texto: "Esperas unos minutos. Tu hijo menor vuelve emocionado. '¡Listo! Pero tienes que cerrar los ojos.'",
+        texto: "Esperas unos minutos. Juanfer vuelve emocionado. '¡Listo! Pero tienes que cerrar los ojos.'",
         opciones: [
           { texto: "Cerrar los ojos y dejarte guiar", destino: "sorpresa" },
           { texto: "Abrir los ojos en el camino", destino: "curiosa" }
@@ -112,36 +124,64 @@
       },
       foto_feliz: {
         texto: "Tomas una foto con tus hijos y todos ríen. Será un recuerdo hermoso.",
+        imagen: "abrazoHijos.jpg",
         opciones: [
           { texto: "Seguir con el desayuno", destino: "llega_papa" }
         ]
       },
       llega_papa: {
         texto: "De pronto, papá llega del trabajo. Entra con una gran sonrisa, un ramo de girasoles y una carta misteriosa.",
+        imagen: "ramo.jpg",
         opciones: [
           { texto: "Recibir la carta", destino: "leer_carta" }
         ]
       },
       leer_carta: {
-        texto: "Abres la carta con cuidado. Reconoces la letra de tu hijo mayor:",
+        texto: "Abres la carta con cuidado. Reconoces la letra de tu hijo Carlos:",
         opciones: [
-          { texto: "Leer la carta", destino: "mensaje_final" }
+          { texto: "Leer carta de Carlos", destino: "mensaje_final" }
         ]
       },
       mensaje_final: {
-        texto: "“Mamá: Aunque hoy no puedo estar contigo, te llevo siempre en mi corazón. Gracias por tu amor y por ser mi fuerza. ¡Feliz Día! Te amo. —Tu hijo mayor ❤️”",
+        imagen: "cartaHijoMayor.jpeg",
+        opciones: [
+          { texto: "Leer carta del hijo mediano", destino: "leer_carta_mediano" }
+        ]
+      },
+      leer_carta_mediano: {
+        texto: "Ahora tomas otra carta, escrita con lápiz y garabatos únicos: es de tu hijo más complicado, pero del que sientes un inmenso orgullo: Andresito.",
+        opciones: [
+          { texto: "Leer carta de Andresito", destino: "mensaje_final_mediano" }
+        ]
+      },
+      mensaje_final_mediano: {
+        imagen: "cartaHijoMedio.jpeg",
+        opciones: [
+          { texto: "Leer carta del hijo menor", destino: "leer_carta_menor" }
+        ]
+      },
+      leer_carta_menor: {
+        texto: "Finalmente, abres un papelito con garabatos que irradian cariño. Es del más consentido, el bebesito Juanfer.",
+        opciones: [
+          { texto: "Leer carta de Juanfer", destino: "mensaje_final_menor" }
+        ]
+      },
+      mensaje_final_menor: {
+        imagen: "cartaHijoMenor.jpeg",
         opciones: [
           { texto: "Terminar", destino: "final" }
         ]
       },
       final: {
         texto: "Con los ojos brillosos, miras a tu familia. Estás rodeada de amor. Hoy es tu día… y te lo mereces todo.",
+        imagen: "familia.jpg",
         opciones: [
           { texto: "💐 ¡Feliz Día, Mamá! 💐", destino: "fin" }
         ]
       },
       fin: {
-        texto: "Gracias por ser una mamá tan especial. 💖 Fin de la historia.",
+        texto: "Gracias por ser una mamá tan especial. 💖 Te queremos tanto tanto tanto todos 😁.",
+        imagen: "foto.jpg",
         opciones: []
       }
     };
@@ -149,18 +189,20 @@
     function mostrarEscena(nombre) {
       const escena = escenas[nombre];
       historia.innerHTML = escena.texto;
-      opciones.innerHTML = "";
+      imagen.src = escena.imagen || 'default.jpg';
+      opciones.innerHTML = '';
 
       escena.opciones.forEach(opcion => {
-        const boton = document.createElement("button");
+        const boton = document.createElement('button');
         boton.innerText = opcion.texto;
-        boton.className = "opcion";
+        boton.className = 'opcion';
         boton.onclick = () => mostrarEscena(opcion.destino);
         opciones.appendChild(boton);
       });
     }
 
-    mostrarEscena("inicio");
+    // Inicia la primera escena
+    mostrarEscena('inicio');
   </script>
 </body>
 </html>
